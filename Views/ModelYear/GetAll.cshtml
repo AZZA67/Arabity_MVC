@@ -1,0 +1,90 @@
+﻿
+
+
+
+@model List<CarModelYear>
+
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Carbook - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+  
+  </head>
+  <body>
+
+    <!-- END nav -->
+   
+	<div>
+      <a href="/ModelYear/NewModelyear">New ModelYear</a>
+    </div>
+
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="car-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>&nbsp;</th>
+						        <th>&nbsp;</th>
+								 <th class="bg-dark heading">ModelYear</th>
+						        <th class="bg-primary heading">Edit</th>
+						        <th class="bg-dark heading">Remove</th>
+						        
+						      </tr>
+						    </thead>
+						    <tbody>
+								@foreach(var item in Model){
+						      <tr class="">
+						      	<td class="car-image"><div class="img" style="background-image:url();"></div></td>
+						        <td class="product-name">
+						        	<h3>@item.ModelYear</h3>
+						        	<p class="mb-0 rated">
+						        		<span>rated:</span>
+						        		<span class="ion-ios-star"></span>
+						        		<span class="ion-ios-star"></span>
+						        		<span class="ion-ios-star"></span>
+						        		<span class="ion-ios-star"></span>
+						        		<span class="ion-ios-star"></span>
+						        	</p>
+						        </td>
+						        
+						        <td >
+						        	
+						        	<div class="price-rate">
+							        	 <a style="background-color:beige" href="/ModelYear/Editmodelyear/@item.ID">Click Here to Edit</a>
+						        	</div>
+						        </td>
+						        
+						        <td >
+						        	<div class="price-rate">
+							        	 <a style="background-color:beige" href="/ModelYear/Deletemodelyear/@item.ID">Click Here to Remove</a>
+						        	</div>
+						        </td>
+
+						        
+						      </tr><!-- END TR-->
+
+							}
+
+
+						     
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+			</div>
+		</section>
+
+
+
+    
+  </body>
+</html>

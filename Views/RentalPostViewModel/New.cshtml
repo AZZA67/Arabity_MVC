@@ -1,0 +1,175 @@
+﻿@model Arabitey.ViewModel.RentalPostViewModel
+
+@{
+    SelectList brandlist = new SelectList(ViewBag.brands, "ID", "BrandName");
+    SelectList modellist = new SelectList(ViewBag.models, "ID", "ModelName");
+    SelectList yearlist = new SelectList(ViewBag.years, "ID", "ModelYear");
+}
+
+
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Add Rental Post</title>
+
+	<!-- Google font -->
+
+
+</head>
+
+<body>
+	<div class="form-header">
+							<h1>RentalPost</h1>
+						</div>
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form">
+						
+				
+                        <form method="post" enctype="multipart/form-data" asp-controller="RentalPostViewModel" asp-action="savenew">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+
+                                        <span class="form-label">Name</span>
+                                        <input class="form-control" asp-for="Name" placeholder="Enter your name">
+                                        <span asp-validation-for="Name"></span>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Color</span>
+                                        <input class="form-control" asp-for="Color" placeholder="Enter Car Color">
+                                        <span asp-validation-for="Color"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span class="form-label">Price</span>
+                                    <input class="form-control" asp-for="Price" placeholder="Enter Car Price">
+                                    <span asp-validation-for="Price"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="form-label">Description</span>
+                                    <input class="form-control" asp-for="Description" placeholder="Enter Your Description">
+                                    <span asp-validation-for="Description"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span class="form-label">Car_Type</span>
+                                    <input class="form-control" asp-for="Car_Type" placeholder="Hatchback">
+                                    <span asp-validation-for="Car_Type"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="form-label">Car_Number</span>
+                                    <input class="form-control" asp-for="Car_Number" placeholder="Car_Number">
+                                    <span asp-validation-for="Car_Number"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span class="form-label">Distance</span>
+                                    <input class="form-control" asp-for="Distance" placeholder="Distance in Km">
+                                    <span asp-validation-for="Distance"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="form-label">Motion_vector</span>
+                                    <input class="form-control" asp-for="Motion_vector" placeholder="Manual/Automatic">
+                                    <span asp-validation-for="Motion_vector"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="form-label">Image</span>
+                                    <input class="form-control" asp-for="ImageFile" accept="image/*" />
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="form-label">Brand_Name</span>
+                                    <select class="form-control" asp-for="brandnameid" asp-items="brandlist" onchange="Getmodels()">
+                                        <option value="0">Select Brand</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span class="form-label">Model Name</span>
+                                    <select class="form-control" asp-for="carModName_id" placeholder="Select Model_Name">
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <span class="form-label">Model Year</span>
+                                    <select class="form-control" asp-for="carmoodyear" asp-items="yearlist">
+                                        <option value="0">Select ModelYear</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+        <div class="col-sm-6">
+            <span class="form-label">Rental_Start_DT</span>
+            <input class="form-control"  asp-for="Rental_Start_DT">
+        </div>
+        <div class="col-sm-6">
+            <span class="form-label">Rental_End_DT</span>
+            <input class="form-control"  asp-for="Rental_End_DT">
+        </div>
+        </div>
+                           
+                          
+
+
+
+
+
+
+                            @section Scripts{
+
+                                <script>
+                                    function Getmodels() {
+                                        console.log($("#brandnameid").val());
+                                        var brand_id = $("#brandnameid").val();
+                                        if (brand_id != 0) {
+                                            $("#carModName_id").html("");
+                                            $.ajax(
+                                                {
+                                                    //how about put the action in course controller
+                                                    url: "/SellingPostViewModel/GetmodelnameBybrandname",
+                                                    data: { "bramdid": brand_id },
+                                                    success: function (result) {
+                                                        console.log(result);
+                                                        for (let item of result) {
+                                                            console.log(item);
+                                                            $("#carModName_id").append("<option value=" + item.id + ">" + item.modelName + "</option>");
+                                                        }
+                                                        //$("#div1").html(result);
+                                                    }
+                                                });
+                                        }
+                                    }
+                                </script>
+                            }
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

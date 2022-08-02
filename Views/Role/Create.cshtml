@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Add New Role";
+}
+
+<h1>Create</h1>
+<form asp-action="Create" >
+    <label> Role Name </label>
+    <input type="text" required name="RoleName" class="form-control" value="@ViewBag.RoleName" placeholder="Name Of New Role!!?"/>
+    <input type="Submit" value="Create" />
+</form>
+<div>
+    @if (ViewBag.Errors != null)
+    {
+        @foreach (var item in ViewBag.Error)
+        {
+            <div>@item.Description</div>
+        }
+
+    }
+</div>

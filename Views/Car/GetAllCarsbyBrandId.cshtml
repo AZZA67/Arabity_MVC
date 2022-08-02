@@ -1,0 +1,44 @@
+﻿@model List<Car>
+@{
+    // Layout=null;
+    // ViewData["Title"] = "GetAllCarsbyBrandId";
+}
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+
+                <div class="col-md-4">
+                    <div class="car-wrap rounded ftco-animate">
+                        <div class="img rounded d-flex align-items-end" style="background-image: url(/images/@item.image.Image);">
+                        </div>
+                        <div class="text">
+                            <h2 class="mb-0"><a href="/Car/GetDetails/@item.ID">@item.Name</a></h2>
+                            <div class="d-flex mb-3">
+                                <span class="cat">@item.Car_Type</span>
+                                <p class="price ml-auto">@item.Price</p>
+                            </div>
+                            @if (User.IsInRole("Admin"))
+                            {
+
+                                <p class="d-flex mb-0 d-block"><a href="/Car/Edit/@item.ID" class="btn btn-secondary py-2 ml-3">Edit</a><a href="/Car/Remove/@item.ID" class="btn btn-primary py-2 mr-1">Remove</a><a href="/Car/GetDetails/@item.ID" class="btn btn-primary py-2 mr-1">Details</a></p>
+                            }
+                            else
+                            {
+                                <p class="d-flex mb-0 d-block"><a href="/Car/GetDetails/@item.ID" class="btn btn-primary py-2 mr-1">Details</a></p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</section>
+@if (User.IsInRole("ADMIN"))
+{
+    <p class="d-flex mb-0 d-block"><a href="/Car/New" class="btn btn-primary py-2 mr-1">Add</a></p>
+}

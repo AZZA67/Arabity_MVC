@@ -1,0 +1,90 @@
+﻿@model Post
+<h1>POST Details</h1>
+<table class="table table-hover table-bordered">
+
+
+    <tr>
+
+
+        <td class="table-light">Date</td>
+        <td class="table-light">Post Title</td>
+        <td class="table-light">
+            Car Image
+        </td>
+        <td class="table-light">Post Description</td>
+        <td class="table-light">Rental start Date</td>
+        <td class="table-light">Rental End Date</td>
+        <td class="table-light">car brand</td>
+        <td class="table-light">car model name</td>
+        <td class="table-light">car model year</td>
+        <td class="table-light">car price</td>
+        <td class="table-light">car color</td>
+        <td class="table-light">car motion vector</td>
+        <td class="table-light">car number</td>
+        <td class="table-light">car type</td>
+    </tr>
+    <tr>
+        <td class="table-primary">@Model.post_date</td>
+
+        <td class="table-primary">@Model.Name</td>
+        <td class="table-primary">
+            <img src="/images/@Model.car.image.Image" width="200px" height="200px" />
+        </td>
+        <td class="table-primary">@Model.Description</td>
+        <td class="table-primary">@Model.Rental_Start_DT</td>
+        <td class="table-primary">@Model.Rental_End_DT</td>
+        <td class="table-primary">@Model.car.carbrand.BrandName</td>
+        <td class="table-primary">@Model.car.carModelName.ModelName</td>
+        <td class="table-primary">@Model.car.carmodelyear.ModelYear</td>
+        <td class="table-primary">@Model.car.Price</td>
+        <td class="table-primary">@Model.car.Color</td>
+        <td class="table-primary">@Model.car.Motion_vector</td>
+        <td class="table-primary">@Model.car.Car_Number</td>
+        <td class="table-primary">@Model.car.Car_Type</td>
+    </tr>
+</table>
+<script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+
+@*<ul id="comment">
+    @foreach (var item in @Model.Comments)
+    {
+        <li> @item.UserName : @item.Text</li>
+    }
+</ul>*@
+<span class="form-label">Name</span>
+<input class="form-control" name="name" id="name" placeholder="Enter your name">
+
+
+<span class="form-label">Name</span>
+<input class="form-control" type="text" name="comment" id="comment" placeholder="Enter your name">
+
+
+
+<input type="button" onclick="sendcomment()" value="comment" class="btn btn-primary" />
+<br />
+<ul id="Comments">
+</ul>
+<script>
+    //initialize hub
+        var hubconnection=
+        new signalR.HubConnectionBuilder().withUrl("/CommentHub").build();
+
+    //handel request come from server
+    hubconnection.on("Display", function (username, comment, postid) {
+        if(@Model.ID==postid)
+            document.getElementById("Comments").innerHTML +=
+                "<Label>" + username + "</Label>"+":" + "<textbox>" + comment + "</textbox>"
+    });
+   // start Connect with hub
+   hubconnection.start().then(function(){
+        console.log("connect success");
+    });
+
+   //send data to hub server
+   function sendcomment(){
+        var user = document.getElementById("name").value;
+        var comment = document.getElementById("comment").value;
+        hubconnection.invoke("Make_comment",user,comment,@Model.ID);
+    }
+</script>
+
